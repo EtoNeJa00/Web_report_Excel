@@ -23,13 +23,9 @@ namespace Web_report_Excel.Controllers
         {
             try
             {
-                
                 return db.Orders.Where(o => o.Id == id).Single();
             }
-            catch
-            {
-                
-            }
+            catch{}
             return new Order();
             
         }
@@ -38,7 +34,13 @@ namespace Web_report_Excel.Controllers
         {
             try
             {
-                db.Orders.Add(order);
+                var orderTmp = new Order()
+                {
+                    Date = order.Date,
+                    PriceSum = order.PriceSum
+                };
+
+                db.Orders.Add(orderTmp);
                 await db.SaveChangesAsync();
                 return StatusCode(200);
             }
@@ -49,11 +51,14 @@ namespace Web_report_Excel.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> ChengeOrder(Order order)
+        public async Task<IActionResult> ChengeOrder(int id, Order order)
         {
             try
             {
-                db.Orders.Update(order);
+                var orderDB = db.Orders.Where(o => o.Id == id).Single();
+                orderDB.Date = order.Date;
+                orderDB.PriceSum = order.PriceSum;
+                db.Orders.Update(orderDB);
                 await db.SaveChangesAsync();
                 return StatusCode(200);
             }

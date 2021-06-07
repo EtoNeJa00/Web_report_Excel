@@ -27,7 +27,7 @@ namespace Web_report_Excel.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<decimal>("PriceSum")
-                        .HasColumnType("decimal(65,30)");
+                        .HasColumnType("decimal(10,3)");
 
                     b.HasKey("Id");
 
