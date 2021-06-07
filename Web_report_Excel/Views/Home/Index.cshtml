@@ -1,0 +1,61 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div style="float:left">
+    @await Html.PartialAsync("AddOrder", new Order())
+    @await Html.PartialAsync("ExcelForm", new DateRange())
+
+    <table class="table">
+        <tr><th>ID</th><th>Сумма</th><th>Дата</th></tr>
+        @foreach (Order order in Model.Orders)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@Html.DisplayFor(m => order.PriceSum)</td>
+                <td>@order.Date</td>
+                <td>@Html.ActionLink("Редактировать", "OrderEdit", new { id = order.Id }, new { @class = "OrderEdit" })</td>
+            </tr>
+        }
+    </table>
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+           class="btn btn-outline-dark">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Назад
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+           class="btn btn-outline-dark">
+            Вперед
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    }
+</div>
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+           $.ajaxSetup({ cache: false });
+           $(".OrderEdit").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+
+    </script>
+}

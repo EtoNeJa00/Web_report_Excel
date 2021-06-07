@@ -1,0 +1,32 @@
+﻿@model Order
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 style="float:left">Заказ № @Model.Id</h4>
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        
+    </div>
+    <div class="modal-body">
+        <form style="display:inline-block" asp-action="ChengeOrder" asp-controller="Home" method="POST" data-ajax="true" data-ajax-update="#success-messageE">
+            <div style="display: inline-block">
+                Сумма<br />
+                <input asp-format="{0:N4}" asp-for="PriceSum" value="@Model.PriceSum"/>
+                <span asp-validation-for="PriceSum"></span>
+            </div>
+            <div style="display: inline-block">
+                Дата<br />
+                <input type="date" asp-for="Date" value="@Model.Date.ToString("yyyy-MM-dd")"/>
+                <span asp-validation-for="Date"></span>
+            </div>
+            <div ></div>
+            <input type="hidden" value="@Model.Id" asp-for="Id"/>
+            <input type="submit" value="Изменить" />
+        </form>
+        <form style="display:inline-block" asp-action="DeleteOrder" asp-controller="Home" method="POST" data-ajax="true" data-ajax-update="#success-messageE">
+            <input type="hidden" value="@Model.Id" asp-for="Id" />
+            <input type="submit" value="Удалить" />
+        </form>
+        <div id="success-messageE">
+        </div>
+    </div>
+</div>

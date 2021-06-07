@@ -1,0 +1,18 @@
+﻿@model bool
+
+<div id="success-message" style=" width: 400px; margin: 0 auto; color: #fff; padding: 10px; text-align: center;">
+    @if (Model)
+    {
+        <p style="color: green;">Успешно</p>
+    }
+    else
+    {
+        <p style="color: red;">Ошибка</p>
+    }
+    <script>
+        $(function () {
+            $("#success-message").show();
+            setTimeout(function () { $("#success-message").fadeOut(1500); }, 5000)
+        })
+    </script>
+</div>

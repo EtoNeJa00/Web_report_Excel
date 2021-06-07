@@ -1,0 +1,30 @@
+﻿@model DateRange
+
+<div id="example" style="text-align: center;">
+    <div class="demo-section k-content wide" style="display: inline-block;">
+        <h4>Скачать эксель</h4>
+        <form asp-action="DownloadExcel" asp-controller="Home" method="POST" >
+            <div style="display: inline-block">
+                c:
+                <input id="date-start" type="date" asp-for="Start" value="@null" onchange="Validation()"/>
+                <span asp-validation-for="Start"></span>
+            </div>
+            <div style="display: inline-block">
+                по:
+                <input id="data-end" type="date" asp-for="End" value="@null"  onchange="Validation()" />
+                <span asp-validation-for="End"></span>
+            </div>
+            <input type="submit" value="Скачать" />
+        </form>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        function Validation() {
+            let start = document.getElementById("date-start")
+            let end = document.getElementById("data-end")
+            if (start.value >= end.value) {
+                start.value = end.value;
+            }
+        }
+    </script>
